@@ -1,0 +1,32 @@
+- hosts: allserver
+  vars:
+   - image: aldykustyandi/apache-custom
+  tasks:
+   - name: install python-docker
+     apt:
+      name: "{{ item}}"
+      state: present
+     loop:
+      - python3
+      - python3-docker
+     when: ansible_facts['os_family'] == "Debian"
+
+   - name: install python-docker centos
+     yum:
+      name: "{{ item }}"
+      state: present
+     loop:
+      - python3
+      - python3-docker
+     when: ansible_facts['os_family'] == "RedHat"
+
+   - name: run container
+     docker_container:
+       name: docker-ansible-hextris   #ini nama container nya
+       image: "{{ image }}"  #ini ngambil dari vars
+       pull: yes
+       state: started
+       published_ports:
+         - 10001:80
+       recreate: yes
+
