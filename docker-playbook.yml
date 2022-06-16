@@ -1,6 +1,6 @@
 - hosts: allserver
   vars:
-   - image: aldykustyandi/apache-custom
+   - image: aldykustyandi/nginx-hextris
   tasks:
    - name: install python-docker
      apt:
